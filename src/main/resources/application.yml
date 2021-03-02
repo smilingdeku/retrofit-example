@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: @profile@
+  messages:
+    basename: i18n/messages
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
