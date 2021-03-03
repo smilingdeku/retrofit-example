@@ -1,6 +1,8 @@
 package org.example.retrofit;
 
 import org.example.retrofit.domain.Contributor;
+import org.example.retrofit.domain.Post;
+import org.example.retrofit.service.CustomService;
 import org.example.retrofit.service.SimpleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ class ApplicationTests {
     @Autowired
     private SimpleService simpleService;
 
+    @Autowired
+    private CustomService customService;
+
     @Test
     public void testSimpleService() throws IOException {
         Call<List<Contributor>> call = simpleService.contributors("square", "retrofit");
@@ -32,6 +37,25 @@ class ApplicationTests {
                 System.out.println(contributor.login + " (" + contributor.contributions + ")");
             }
         }
+    }
+
+    @Test
+    public void testCustomService() throws IOException {
+//        Call<Post> call = customService.get(1);
+//        Response<Post> response = call.execute();
+//        System.out.println(response.body());
+
+//        Call<List<Post>> call = customService.list();
+//        Response<List<Post>> response = call.execute();
+//        List<Post> posts = response.body();
+
+        Post post = new Post();
+        post.setUserId(1L);
+        post.setTitle("foo");
+        post.setBody("bar");
+        Call<Post> call = customService.update(1L, post);
+        Response<Post> response = call.execute();
+        System.out.println(response.body());
     }
 
 }
