@@ -1,33 +1,34 @@
-/*
- * Copyright (C) 2012 Square, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.example.retrofit.service;
 
-import org.example.retrofit.domain.Contributor;
+import org.example.retrofit.annotation.Retrofit;
+import org.example.retrofit.domain.Post;
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
+import retrofit2.http.*;
 
 import java.util.List;
 
-
+/**
+ * https://jsonplaceholder.typicode.com/guide/
+ */
+@Retrofit(baseUrl = "https://jsonplaceholder.typicode.com/guide/")
 public interface SimpleService {
 
-    @GET("/repos/{owner}/{repo}/contributors")
-    Call<List<Contributor>> contributors(@Path("owner") String owner, @Path("repo") String repo);
+    @GET("/posts/{id}")
+    Call<Post> get(@Path(value = "id") long id);
+
+    @GET("/posts")
+    Call<List<Post>> list();
+
+    @POST("/posts")
+    Call<Post> create(@Body Post post);
+
+    @PUT("/posts/{id}")
+    Call<Post> update(@Path(value = "id") long id, @Body Post post);
+
+    @DELETE("/posts/{id}")
+    Call<Void> delete(@Path(value = "id") long id);
+
+    @GET("/posts/{id}")
+    Call<Post> getByUserId(@Path(value = "id") long id, @Query(value = "userId") long userId);
 
 }
-
-
